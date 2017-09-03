@@ -44,4 +44,4 @@ nomad-1 $ dig envoy-consul-sds.service.dc1.consul
 nomad-1 $ curl -i http://envoy-consul-sds.service.dc1.consul:8080
 ```
 
-Next, [Deploy Envoy System Job](./envoy-system-job.md)
+Next, [Deploy Envoy System Job](./deploy-envoy-system-job.md)
