@@ -30,4 +30,4 @@ Check if the system job is up and running
 nomad-1 $ nomad status proxy
 ```
 
-Next [Deploy Nginx Service](./docs/deploy-nginx-service.md)
+Next [Deploy Nginx Service](./deploy-nginx-service.md)

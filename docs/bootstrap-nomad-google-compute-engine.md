@@ -94,4 +94,4 @@ Check Nomad node status
 nomad node-status
 ```
 
-Up next, [Deploy Envoy Consul Service Discovery Service](./docs/deploy-envoy-consul-sds.md)
+Up next, [Deploy Envoy Consul Service Discovery Service](./deploy-envoy-consul-sds.md)
