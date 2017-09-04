@@ -2,13 +2,15 @@
 
 This tutorial is based on [Kelsey Hightower](https://github.com/kelseyhightower)'s [kubernetes-envoy-sds](https://github.com/kelseyhightower/kubernetes-envoy-sds) tutorial but using [Consul](https://consul.io) and [Nomad](https://www.nomadproject.io/).
 
-`envoy-consul-sds` service implements the [Envoy SDS API](https://lyft.github.io/envoy/docs/configuration/cluster_manager/sds_api.html) on top of [Consul Health Endpoint API](https://www.consul.io/api/health.html). `envoy-consul-sds` service returns a list of healthy endpoints for Envoy to use as upstream backends for a cluster.
+`envoy-consul-sds` service implements the [Envoy SDS API](https://lyft.github.io/envoy/docs/configuration/cluster_manager/sds_api.html) on top of [Consul Health Endpoint API](https://www.consul.io/api/health.html). `envoy-consul-sds` service returns a list of healthy endpoints for Envoy to use as upstream backends for a cluster. Each Consul service can be referenced in the Envoy config file by its DNS name.
 
-Each Consul service can be referenced in the Envoy config file by its DNS name. For example a service named `nginx` can be referenced as `nginx.service.{datacenter_name}.consul` in the Envoy config file.
+## Goal
+
+In this tutorial we will run Nginx on [Nomad](https://www.nomadproject.io/) and register it in [Consul](https://www.consul.io/). Then we will use Envoy to access Nginx using Consul DNS interface.
+
+The idea is to explore ways Envoy can integrate with applications running on Nomad using Consul.
 
 ## Tutorial
-
-In this tutorial we will deploy Envoy, `envoy-consul-sds` service and `nginx` service on [Nomad](https://www.nomadproject.io/). We will use [Consul](https://www.consul.io/) for service discovery using Consul's DNS interface.
 
 * [Bootstrap the Nomad Infrastructure on Google Compute Engine](./docs/bootstrap-nomad-google-compute-engine.md)
 * [Deploy Envoy Consul Service Discovery Service](./docs/deploy-envoy-consul-sds.md)
