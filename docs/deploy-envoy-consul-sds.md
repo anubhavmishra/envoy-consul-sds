@@ -4,7 +4,7 @@ The `envoy-consul-sds` service will run as a Nomad service anywhere in the Nomad
 
 ## Prerequisites
 
-**These steps might have been completed in the previous section. Hence skip to [Deploy Envoy Consul Service Discovery Service](#deploy-envoy-consul-service-discovery-service)**
+*These steps might have been completed in the previous section. Hence skip to [Deploy Envoy Consul Service Discovery Service](#deploy-envoy-consul-service-discovery-service)*
 
 SSH into a Nomad Server
 
