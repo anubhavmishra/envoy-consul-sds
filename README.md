@@ -16,3 +16,5 @@ In this turorial we will deploy Envoy, `envoy-consul-sds` service and `nginx` se
 * [Deploy Envoy Consul Service Discovery Service](./docs/deploy-envoy-consul-sds.md)
 * [Deploy Envoy System Job](./docs/deploy-envoy-system-job.md)
 * [Deploy Nginx Service](./docs/deploy-nginx-service.md)
+* 
+* [Clean up](./docs/clean-up.md)

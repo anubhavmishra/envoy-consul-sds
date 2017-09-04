@@ -98,6 +98,9 @@ mv consul.service /etc/systemd/system/consul.service
 systemctl enable consul
 systemctl start consul
 
+# Wait until consul comes up
+sleep 2
+
 # Configure dnsmasq
 mkdir -p /etc/dnsmasq.d
 cat > /etc/dnsmasq.d/10-consul <<'EOF'
@@ -106,3 +109,5 @@ EOF
 
 systemctl enable dnsmasq
 systemctl start dnsmasq
+# Force restart for adding consul dns
+systemctl restart dnsmasq

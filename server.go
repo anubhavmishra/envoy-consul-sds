@@ -58,6 +58,7 @@ func NewServer(config *ServerConfig) (*Server, error) {
 
 func (s *Server) Start() error {
 	s.engine.Use(gin.Recovery(), gin.Logger())
+	s.engine.GET("/", s.index)
 	s.engine.GET("/v1/registration/:service_name", s.registration)
 	log.Printf("envoy-consul-sds started - listening on port %v", s.port)
 	if err := s.engine.Run(fmt.Sprintf(":%v", s.port)); err != nil {
@@ -78,4 +79,9 @@ func (s *Server) registration(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, service)
+}
+
+func (s *Server) index(c *gin.Context) {
+
+	c.JSON(http.StatusOK, gin.H{"name": "envoy-consul-sds", "version": s.version})
 }

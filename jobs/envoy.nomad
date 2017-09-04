@@ -1,7 +1,12 @@
 job "proxy" {
   datacenters = ["dc1"]
   type = "system"
-  group "proxy" {
+  update {
+    stagger = "5s"
+    max_parallel = 1
+  }
+  
+  group "envoy" {
     count = 1
     task "envoy" {
       driver = "docker"
@@ -17,7 +22,7 @@ job "proxy" {
         network_mode = "host"
       }
       artifact {
-        source = "https://gist.githubusercontent.com/anubhavmishra/afe699320bdc4d855d13e7cc244822e0/raw/9cdd1f16355b1b7b0340c745ca650dc4a8fe0937/envoy.json"
+        source = "https://gist.githubusercontent.com/anubhavmishra/afe699320bdc4d855d13e7cc244822e0/raw/5891bdb7b0ad1dc633c771c8c8e892cafc8a9978/envoy.json"
       }
       template {
         source        = "local/envoy.json"

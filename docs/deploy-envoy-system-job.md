@@ -13,21 +13,36 @@ gcloud compute ssh nomad-1
 ## Deploy Envoy 
 
 ```bash
-nomad-1 $ cd envoy-consul-sds
+cd envoy-consul-sds
 ```
 
 ```bash
-nomad-1 $ nomad plan jobs/envoy.nomad
+nomad plan jobs/envoy.nomad
 ```
 
 ```bash
-nomad-1 $ nomad run jobs/envoy.nomad
++ Job: "proxy"
++ Task Group: "proxy" (5 create)
+  + Task: "envoy" (forces create)
+Scheduler dry-run:
+- All tasks successfully allocated.
+Job Modify Index: 0
+To submit the job with version verification run:
+nomad run -check-index 0 jobs/envoy.nomad
+When running the job with the check-index flag, the job will only be run if the
+server side version matches the job modify index returned. If the index has
+changed, another user has modified the job and the plan's results are
+potentially invalid.
+```
+
+```bash
+nomad run jobs/envoy.nomad
 ```
 
 Check if the system job is up and running
 
 ```bash
-nomad-1 $ nomad status proxy
+nomad status proxy
 ```
 
 Next [Deploy Nginx Service](./deploy-nginx-service.md)

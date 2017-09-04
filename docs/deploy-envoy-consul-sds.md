@@ -4,44 +4,69 @@ The `envoy-consul-sds` service will run as a Nomad service anywhere in the Nomad
 
 ## Prerequisites
 
+**These steps might have been completed in the previous section. Hence skip to [Deploy Envoy Consul Service Discovery Service](#deploy-envoy-consul-service-discovery-service)**
+
 SSH into a Nomad Server
 
 ```bash 
 gcloud compute ssh nomad-1
 ```
 
-Clone [envoy-consul-sds](https://github.com/anubhavmishra/envoy-consul-sds) git repo
+Clone [envoy-consul-sds](https://github.com/anubhavmishra/envoy-consul-sds) git repo on `nomad-1`
 
 ```bash
-nomad-1 $ git clone https://github.com/anubhavmishra/envoy-consul-sds.git
+git clone https://github.com/anubhavmishra/envoy-consul-sds.git
 ```
 
 ## Deploy Envoy Consul Service Discovery Service
 
 ```bash
-nomad-1 $ cd envoy-consul-sds
+cd envoy-consul-sds
 ```
 
 ```bash
-nomad-1 $ nomad plan jobs/envoy-consul-sds.nomad
+nomad plan jobs/envoy-consul-sds.nomad
 ```
 
 ```bash
-nomad-1 $ nomad run jobs/envoy-consul-sds.nomad
++ Job: "envoy-consul-sds"
++ Task Group: "webserver" (1 create)
+  + Task: "envoy-consul-sds" (forces create)
+Scheduler dry-run:
+- All tasks successfully allocated.
+Job Modify Index: 0
+To submit the job with version verification run:
+nomad run -check-index 0 jobs/envoy-consul-sds.nomad
+When running the job with the check-index flag, the job will only be run if the
+server side version matches the job modify index returned. If the index has
+changed, another user has modified the job and the plan's results are
+potentially invalid.
+```
+
+```bash
+nomad run jobs/envoy-consul-sds.nomad
 ```
 
 Check if the service job is up and running
 
 ```bash
-nomad-1 $ nomad status envoy-consul-sds
+nomad status envoy-consul-sds
 ```
 
 ```bash
-nomad-1 $ dig envoy-consul-sds.service.dc1.consul 
+dig +noall +answer envoy-consul-sds.service.dc1.consul
 ```
 
 ```bash
-nomad-1 $ curl -i http://envoy-consul-sds.service.dc1.consul:8080
+envoy-consul-sds.service.dc1.consul. 0 IN A     10.142.0.7
+```
+
+```bash
+curl -i http://envoy-consul-sds.service.dc1.consul:8080
+```
+
+```bash
+{"name":"envoy-consul-sds","version":"0.0.1"}
 ```
 
 Next, [Deploy Envoy System Job](./deploy-envoy-system-job.md)
