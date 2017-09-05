@@ -123,3 +123,7 @@ Commercial support is available at
 </html>
 ```
 
+Congratulations! We made it. You are now hitting Nginx using Envoy proxy using Consul SDS Service.
+
+Next [Clean up](./docs/clean-up.md)
+
