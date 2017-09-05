@@ -63,13 +63,11 @@ advertise {
     http = "ADVERTISE_ADDR:4646"
     rpc  = "ADVERTISE_ADDR:4647"
 }
+datacenter = "dc1"
 data_dir  = "/var/lib/nomad"
 log_level = "DEBUG"
 client {
     enabled = true
-    servers = [
-      "nomad-1", "nomad-2", "nomad-3"
-    ]
     options {
         "driver.raw_exec.enable" = "1"
     }
