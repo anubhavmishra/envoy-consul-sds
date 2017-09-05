@@ -144,23 +144,6 @@ nomad-worker-4  us-east1-b  n1-standard-1               10.x.0.9     x.x.x.x    
 gcloud compute ssh nomad-1
 ```
 
-Check Nomad node status
-
-```bash
-nomad node-status
-```
-
-*Might have to wait a little bit for all workers to come up....*
-
-```bash
-ID        DC   Name            Class   Drain  Status
-8dc3f6ef  dc1  nomad-worker-4  <none>  false  ready
-5be8c4f2  dc1  nomad-worker-2  <none>  false  ready
-27dd7a34  dc1  nomad-worker-3  <none>  false  ready
-630c864c  dc1  nomad-worker-1  <none>  false  ready
-2c66ca1c  dc1  nomad-worker-5  <none>  false  ready
-```
-
 List Consul members
 
 ```bash
@@ -177,6 +160,23 @@ nomad-worker-2  10.142.0.5:8301  alive   client  0.9.2  2         dc1
 nomad-worker-3  10.142.0.8:8301  alive   client  0.9.2  2         dc1
 nomad-worker-4  10.142.0.9:8301  alive   client  0.9.2  2         dc1
 nomad-worker-5  10.142.0.7:8301  alive   client  0.9.2  2         dc1
+```
+
+Check Nomad node status
+
+```bash
+nomad node-status
+```
+
+*Might have to wait a little bit for all workers to come up....*
+
+```bash
+ID        DC   Name            Class   Drain  Status
+8dc3f6ef  dc1  nomad-worker-4  <none>  false  ready
+5be8c4f2  dc1  nomad-worker-2  <none>  false  ready
+27dd7a34  dc1  nomad-worker-3  <none>  false  ready
+630c864c  dc1  nomad-worker-1  <none>  false  ready
+2c66ca1c  dc1  nomad-worker-5  <none>  false  ready
 ```
 
 Up next, [Deploy Envoy Consul Service Discovery Service](./deploy-envoy-consul-sds.md)
