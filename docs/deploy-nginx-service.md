@@ -125,5 +125,5 @@ Commercial support is available at
 
 Congratulations! We made it. You are now hitting Nginx using Envoy proxy using Consul SDS Service.
 
-Next [Clean up](./docs/clean-up.md)
+Next [Clean up](./clean-up.md)
 
