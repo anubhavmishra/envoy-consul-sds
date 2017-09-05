@@ -60,7 +60,7 @@ envoy-consul-sds.service.dc1.consul. 0 IN A     10.142.0.7
 ```
 
 ```bash
-curl -i http://envoy-consul-sds.service.dc1.consul:8080
+curl http://envoy-consul-sds.service.dc1.consul:8080
 ```
 
 ```bash
