@@ -125,5 +125,12 @@ Commercial support is available at
 
 Congratulations! We made it. You are now hitting Nginx using Envoy proxy using Consul SDS Service.
 
+
+Exit `nomad-worker-1`
+
+```bash
+exit
+```
+
 Next [Clean up](./clean-up.md)
 
