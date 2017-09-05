@@ -123,8 +123,7 @@ Commercial support is available at
 </html>
 ```
 
-Congratulations! We made it. You are now hitting Nginx using Envoy proxy using Consul SDS Service.
-
+**Congratulations! We made it. You are now hitting Nginx using Envoy proxy using Consul SDS Service.**
 
 Exit `nomad-worker-1`
 
