@@ -27,6 +27,7 @@ Documentation=https://consul.io/docs/
 ExecStart=/usr/local/bin/consul agent \
   -advertise=ADVERTISE_ADDR \
   -bind=0.0.0.0 \
+  -bootstrap-expect 3 \
   -retry-join "provider=gce project_name=PROJECT_NAME tag_value=gce-envoy-consul-sds" \
   -client=0.0.0.0 \
   -data-dir=/var/lib/consul \
@@ -45,20 +46,6 @@ sed -i "s/PROJECT_NAME/${PROJECT_NAME}/" consul.service
 mv consul.service /etc/systemd/system/consul.service
 systemctl enable consul
 systemctl start consul
-
-# Wait until consul comes up
-sleep 2
-
-# Configure dnsmasq
-mkdir -p /etc/dnsmasq.d
-cat > /etc/dnsmasq.d/10-consul <<'EOF'
-server=/consul/127.0.0.1#8600
-EOF
-
-systemctl enable dnsmasq
-systemctl start dnsmasq
-# Force restart for adding consul dns
-systemctl restart dnsmasq
 
 # Download and install Nomad
 wget https://releases.hashicorp.com/nomad/0.6.2/nomad_0.6.2_linux_amd64.zip
@@ -115,3 +102,14 @@ mv nomad.service /etc/systemd/system/nomad.service
 
 systemctl enable nomad
 systemctl start nomad
+
+# Configure dnsmasq
+mkdir -p /etc/dnsmasq.d
+cat > /etc/dnsmasq.d/10-consul <<'EOF'
+server=/consul/127.0.0.1#8600
+EOF
+
+systemctl enable dnsmasq
+systemctl start dnsmasq
+# Force restart for adding consul dns
+systemctl restart dnsmasq

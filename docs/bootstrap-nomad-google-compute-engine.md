@@ -32,7 +32,13 @@ cd envoy-consul-sds
 
 ## Bootstrap a Nomad Cluster
 
-First we will install Nomad, Consul and dnsmasq
+In this section we will create `nomad-1`, `nomad-2` and `nomad-3` instances.
+
+First we will install Consul on them and [auto join](https://www.consul.io/docs/agent/options.html#google-compute-engine) it using GCE metadata.
+
+Nomad will then [auto bootstrap](https://www.nomadproject.io/guides/cluster/automatic.html) itself using existing Consul cluster.
+
+We will also install `dnsmasq` in order to use Consul DNS interface.
 
 ```bash
 gcloud compute instances create nomad-1 nomad-2 nomad-3 \
@@ -41,6 +47,8 @@ gcloud compute instances create nomad-1 nomad-2 nomad-3 \
   --boot-disk-size 300GB \
   --machine-type n1-standard-1 \
   --can-ip-forward \
+  --scopes default,compute-ro \
+  --tags "gce-envoy-consul-sds" \
   --metadata-from-file startup-script=scripts/bootstrap-server.sh
 ```
 
@@ -53,8 +61,6 @@ nomad-1  us-east1-b  n1-standard-1               10.x.0.2     x.x.x.x         RU
 nomad-2  us-east1-b  n1-standard-1               10.x.0.4     x.x.x.x         RUNNING
 nomad-3  us-east1-b  n1-standard-1               10.x.0.3     x.x.x.x         RUNNING
 ```
-
-Join Nomad nodes
 
 ```bash
 gcloud compute ssh nomad-1
@@ -72,8 +78,17 @@ This tool needs to create the directory
 Do you want to continue (Y/n)? 
 ```
 
+List Consul members
+
 ```bash
-nomad server-join nomad-2 nomad-3
+consul members
+```
+
+```bash
+Node     Address          Status  Type    Build  Protocol  DC
+nomad-1  10.x.0.2:8301  alive   server  0.9.2  2         dc1
+nomad-2  10.x.0.3:8301  alive   server  0.9.2  2         dc1
+nomad-3  10.x.0.4:8301  alive   server  0.9.2  2         dc1
 ```
 
 Check Nomad cluster status
@@ -89,25 +104,6 @@ nomad-2.global  10.x.0.3  4648  alive   false   2         0.6.2  dc1         glo
 nomad-3.global  10.x.0.4  4648  alive   false   2         0.6.2  dc1         global
 ```
 
-Join Consul servers
-
-```bash
-consul join nomad-2 nomad-3
-```
-
-List Consul members
-
-```bash
-consul members
-```
-
-```bash
-Node     Address          Status  Type    Build  Protocol  DC
-nomad-1  10.x.0.2:8301  alive   server  0.9.2  2         dc1
-nomad-2  10.x.0.3:8301  alive   server  0.9.2  2         dc1
-nomad-3  10.x.0.4:8301  alive   server  0.9.2  2         dc1
-```
-
 Logout of `nomad-1` back to your Cloud Shell or local terminal
 
 ```bash
@@ -116,7 +112,7 @@ exit
 
 ## Bootstrap a Nomad Workers
 
-We will install Nomad, dnsmasq and docker
+In this section we will create `nomad-worker-1`, `nomad-worker-2`, `nomad-worker-3`, `nomad-worker-4` and `nomad-worker-5` instances. We will install Nomad, Consul, dnsmasq and docker on the workers.
 
 ```bash
 gcloud compute instances create nomad-worker-1 nomad-worker-2 nomad-worker-3 nomad-worker-4 nomad-worker-5 \
@@ -125,6 +121,8 @@ gcloud compute instances create nomad-worker-1 nomad-worker-2 nomad-worker-3 nom
   --boot-disk-size 200GB \
   --machine-type n1-standard-1 \
   --can-ip-forward \
+  --scopes default,compute-ro \
+  --tags "gce-envoy-consul-sds" \
   --metadata-from-file startup-script=scripts/bootstrap-client.sh
 ```
 
@@ -161,53 +159,6 @@ ID        DC   Name            Class   Drain  Status
 27dd7a34  dc1  nomad-worker-3  <none>  false  ready
 630c864c  dc1  nomad-worker-1  <none>  false  ready
 2c66ca1c  dc1  nomad-worker-5  <none>  false  ready
-```
-
-Clone [envoy-consul-sds](https://github.com/anubhavmishra/envoy-consul-sds) git repo on `nomad-1`
-
-```bash
-git clone https://github.com/anubhavmishra/envoy-consul-sds.git
-```
-
-Deploy Consul system job
-
-```bash
-cd envoy-consul-sds
-```
-
-```bash
-nomad plan jobs/consul.nomad
-```
-
-```bash
-+ Job: "consul"
-+ Task Group: "consul-agent" (5 create)
-  + Task: "consul-agent" (forces create)
-Scheduler dry-run:
-- All tasks successfully allocated.
-Job Modify Index: 0
-To submit the job with version verification run:
-nomad run -check-index 0 jobs/consul.nomad
-When running the job with the check-index flag, the job will only be run if the
-server side version matches the job modify index returned. If the index has
-changed, another user has modified the job and the plan's results are
-potentially invalid.
-```
-
-```bash
-nomad run jobs/consul.nomad
-```
-
-Check Consul system job status
-
-```bash
-nomad status consul
-```
-
-Join Consul clients to the cluster
-
-```bash
-consul join nomad-worker-1 nomad-worker-2 nomad-worker-3 nomad-worker-4 nomad-worker-5
 ```
 
 List Consul members
