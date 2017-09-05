@@ -8,7 +8,7 @@ This tutorial is based on [Kelsey Hightower](https://github.com/kelseyhightower)
 
 In this tutorial we will run Nginx on [Nomad](https://www.nomadproject.io/) and register it in [Consul](https://www.consul.io/). Then we will use Envoy to access Nginx using Consul DNS interface.
 
-The idea is to explore ways Envoy can integrate with applications running on Nomad using Consul.
+The idea is to explore ways [Envoy](https://lyft.github.io/envoy/) can integrate with applications running on Nomad using Consul.
 
 ## Tutorial
 
