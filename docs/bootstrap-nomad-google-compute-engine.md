@@ -110,7 +110,7 @@ Logout of `nomad-1` back to your Cloud Shell or local terminal
 exit
 ```
 
-## Bootstrap a Nomad Workers
+## Bootstrap Nomad Workers
 
 In this section we will create `nomad-worker-1`, `nomad-worker-2`, `nomad-worker-3`, `nomad-worker-4` and `nomad-worker-5` instances. We will install Nomad, Consul, dnsmasq and docker on the workers.
 
