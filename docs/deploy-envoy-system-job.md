@@ -1,6 +1,6 @@
 # Deploy Envoy System Job
 
-We will now run [Envoy](https://lyft.github.io/envoy/) as a system job in Nomad so it runs on all nodes in the Nomad cluster.
+We will now run [Envoy](https://lyft.github.io/envoy/) as a system job in Nomad so it runs on all nodes in the Nomad cluster. Envoy will use [envoy.json](https://gist.github.com/anubhavmishra/afe699320bdc4d855d13e7cc244822e0) config file.
 
 ## Prerequisite
 
