@@ -2,7 +2,7 @@
 
 This tutorial is based on [Kelsey Hightower](https://github.com/kelseyhightower)'s [kubernetes-envoy-sds](https://github.com/kelseyhightower/kubernetes-envoy-sds) tutorial but using [Consul](https://consul.io) and [Nomad](https://www.nomadproject.io/).
 
-`envoy-consul-sds` service implements the [Envoy SDS API](https://lyft.github.io/envoy/docs/configuration/cluster_manager/sds_api.html) on top of [Consul Health Endpoint API](https://www.consul.io/api/health.html). `envoy-consul-sds` service returns a list of healthy endpoints for Envoy to use as upstream backends for a cluster. Each Consul service can be referenced in the Envoy config file by its DNS name.
+`envoy-consul-sds` service implements the [Envoy SDS API](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/service_discovery.html#service-discovery-service-sds) on top of [Consul Health Endpoint API](https://www.consul.io/api/health.html). `envoy-consul-sds` service returns a list of healthy endpoints for Envoy to use as upstream backends for a cluster. Each Consul service can be referenced in the Envoy config file by its DNS name.
 
 ## Goal
 
