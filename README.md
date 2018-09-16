@@ -4,7 +4,7 @@ This tutorial is based on [Kelsey Hightower](https://github.com/kelseyhightower)
 
 `envoy-consul-sds` service implements the [Envoy SDS API](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/service_discovery.html#service-discovery-service-sds) on top of [Consul Health Endpoint API](https://www.consul.io/api/health.html). `envoy-consul-sds` service returns a list of healthy endpoints for Envoy to use as upstream backends for a cluster. Each Consul service can be referenced in the Envoy config file by its DNS name.
 
-**NOTE: This project uses [Envoy API v1](https://www.envoyproxy.io/docs/envoy/latest/api-v1/api#). This doesn't use Envoy xDS for services discouvery etc. Those are covered by [Envoy API v2](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api).** 
+**NOTE: This project uses [Envoy API v1](https://www.envoyproxy.io/docs/envoy/latest/api-v1/api#). This doesn't use Envoy xDS for configuration. Those are covered by [Envoy API v2](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api).** 
 
 ## Goal
 
