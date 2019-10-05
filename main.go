@@ -14,6 +14,7 @@ const (
 	consulHTTPAddrFlag   = "consul-http-addr"
 	consulACLTokenFlag   = "consul-acl-token"
 	consulSchemeFlag     = "consul-scheme"
+	consulAllowStaleFlag = "consul-stale"
 
 	defaultPort             = 8080
 	defaultConsulDatacenter = "dc1"
@@ -71,6 +72,10 @@ func configureCli(app *cli.App) {
 			Value: defaultConsulScheme,
 			Usage: "The scheme for consul",
 		},
+		cli.BoolFlag{
+			Name:  consulAllowStaleFlag,
+			Usage: "Set stale parameter on consul service health queries",
+		},
 	}
 	cli.AppHelpTemplate = `{{.Name}} - {{.Usage}}
 
@@ -90,6 +95,7 @@ func validateConfig(c *cli.Context) (*ServerConfig, error) {
 	var consulHTTPAddr = c.String(consulHTTPAddrFlag)
 	var consulACLToken = os.Getenv("CONSUL_HTTP_TOKEN")
 	var consulScheme = c.String(consulSchemeFlag)
+	var consulAllowStaleFlag = c.Bool(consulAllowStaleFlag)
 
 	if !c.IsSet(consulHTTPAddrFlag) {
 		consulHTTPAddr = os.Getenv("CONSUL_HTTP_ADDR")
@@ -104,5 +110,6 @@ func validateConfig(c *cli.Context) (*ServerConfig, error) {
 		consulHTTPAddr:   consulHTTPAddr,
 		consulACLToken:   consulACLToken,
 		consulScheme:     consulScheme,
+		consulAllowStale: consulAllowStaleFlag,
 	}, nil
 }
