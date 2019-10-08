@@ -6,7 +6,8 @@ import (
 )
 
 type Consul struct {
-	client *api.Client
+	client    *api.Client
+	queryOpts *api.QueryOptions
 }
 
 type ConsulService struct {
@@ -18,7 +19,7 @@ type ConsulService struct {
 func (c *Consul) GetService(serviceName string) ([]ConsulService, error) {
 	serviceAddressesPorts := []ConsulService{}
 	// get consul service addresses and ports
-	addresses, _, err := c.client.Health().Service(serviceName, "", true, nil)
+	addresses, _, err := c.client.Health().Service(serviceName, "", true, c.queryOpts)
 	if err != nil {
 		return nil, errors.Wrap(err, "get consul service")
 	}

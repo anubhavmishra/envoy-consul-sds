@@ -27,6 +27,7 @@ type ServerConfig struct {
 	consulHTTPAddr   string
 	consulACLToken   string
 	consulScheme     string
+	consulAllowStale bool
 }
 
 func NewServer(config *ServerConfig) (*Server, error) {
@@ -48,11 +49,17 @@ func NewServer(config *ServerConfig) (*Server, error) {
 		return nil, errors.Wrap(err, "initializing consul client")
 	}
 
+	var queryOpts *api.QueryOptions
+	if config.consulAllowStale {
+		queryOpts = &api.QueryOptions{AllowStale: true}
+
+	}
+
 	return &Server{
 		port:    config.port,
 		version: version,
 		engine:  engine,
-		consul:  &Consul{client: client},
+		consul:  &Consul{client: client, queryOpts: queryOpts},
 	}, nil
 }
 
