@@ -48,31 +48,31 @@ func configureCli(app *cli.App) {
 	app.Usage = "Envoy Consul Service Discovery Service"
 	app.Version = version
 	app.Flags = []cli.Flag{
-		cli.IntFlag{
+		&cli.IntFlag{
 			Name:  fmt.Sprintf("%s, p", portFlag),
 			Value: defaultPort,
 			Usage: "The `port` to start the webserver on",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  consulDatacenterFlag,
 			Value: defaultConsulDatacenter,
 			Usage: "The `datacenter` for consul",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  consulHTTPAddrFlag,
 			Value: defaultConsulHTTPAddr,
 			Usage: "The `address` for consul http api",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  consulACLTokenFlag,
 			Usage: "The acl token for consul",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  consulSchemeFlag,
 			Value: defaultConsulScheme,
 			Usage: "The scheme for consul",
 		},
-		cli.BoolFlag{
+		&cli.BoolFlag{
 			Name:  consulAllowStaleFlag,
 			Usage: "Set stale parameter on consul service health queries",
 		},
